@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Philvin Digital Systems | Engineering Digital Efficiency</title>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --primary: #020617;
-            --secondary: #f97316; /* Orange */
-            --accent: #8b5cf6; /* Purple */
+            --secondary: #f97316;
+            --accent: #8b5cf6;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --glass: rgba(15, 23, 42, 0.65);
@@ -39,7 +37,7 @@
         ::-webkit-scrollbar-track { background: var(--primary); }
         ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
 
-        /* --- Navigation --- */
+        /* Desktop Nav */
         nav {
             display: flex;
             justify-content: space-between;
@@ -81,7 +79,6 @@
 
         .nav-links > li > a:hover { color: var(--text-main); }
 
-        /* Dropdown */
         .dropdown-menu {
             display: none;
             position: absolute;
@@ -110,7 +107,44 @@
         .dropdown-menu a:last-child { border-bottom: none; }
         .dropdown-menu a:hover { background: rgba(255,255,255,0.03); color: var(--secondary); padding-left: 25px; }
 
-        /* --- Mobile Bottom Nav --- */
+        /* Mobile Top Bar (New) */
+        .mobile-top-bar {
+            display: none; /* Hidden on desktop */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: var(--secondary);
+            z-index: 1002;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .mobile-top-bar .logo {
+            color: white;
+            -webkit-text-fill-color: white;
+            font-size: 1.2rem;
+        }
+
+        .top-bar-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .top-bar-icons a {
+            color: white;
+            font-size: 1.1rem;
+            transition: transform 0.2s;
+        }
+
+        .top-bar-icons a:hover {
+            transform: scale(1.1);
+        }
+
+        /* Mobile Bottom Nav */
         .mobile-nav {
             display: none;
             position: fixed;
@@ -119,7 +153,7 @@
             transform: translateX(-50%);
             width: 90%;
             max-width: 400px;
-            background: rgba(2, 6, 23, 0.9);
+            background: rgba(2, 6, 23, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             padding: 12px 30px;
@@ -133,7 +167,11 @@
         .mobile-nav a { color: var(--text-muted); font-size: 1.1rem; text-decoration: none; transition: 0.3s; padding: 10px; }
         .mobile-nav a.active { color: var(--secondary); transform: translateY(-2px); }
 
-        /* --- Hero --- */
+        section { padding: 100px 10%; }
+        .section-header { margin-bottom: 60px; }
+        .section-header h2 { font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; color: white; letter-spacing: -1px; }
+        .section-header p { color: var(--secondary); font-family: 'JetBrains Mono'; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 10%; }
         
         .hero-tag {
@@ -155,7 +193,6 @@
         .hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero p { max-width: 600px; font-size: 1.1rem; color: var(--text-muted); margin-bottom: 40px; font-weight: 300; }
 
-        /* --- Glass Cards --- */
         .glass-card {
             background: var(--glass);
             backdrop-filter: blur(12px);
@@ -177,131 +214,140 @@
 
         .glass-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-5px); }
 
-        /* --- Layouts --- */
         .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; }
-        section { padding: 100px 10%; }
-        .section-header { margin-bottom: 60px; }
-        .section-header h2 { font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; color: white; letter-spacing: -1px; }
-        .section-header p { color: var(--secondary); font-family: 'JetBrains Mono'; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* --- Deployed Sites (Portfolio) --- */
-        .portfolio-card {
-            position: relative;
-            height: 350px;
-            border-radius: 20px;
-            overflow: hidden;
+        
+        .sites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .site-card {
+            background: rgba(255,255,255,0.02);
             border: 1px solid var(--glass-border);
-        }
-        
-        .portfolio-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s ease;
-        }
-        
-        .portfolio-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(2,6,23,0.95), transparent);
+            border-radius: 12px;
+            padding: 25px;
+            transition: 0.3s;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            padding: 30px;
-            opacity: 1;
-            transition: 0.4s;
+            justify-content: space-between;
         }
         
-        .portfolio-card:hover .portfolio-img { transform: scale(1.05); }
-        .portfolio-card:hover .portfolio-overlay { background: linear-gradient(to top, rgba(2,6,23,1), rgba(2,6,23,0.8)); }
+        .site-card:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--secondary);
+            transform: translateY(-3px);
+        }
         
-        .portfolio-tag { font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--accent); margin-bottom: 5px; text-transform: uppercase; }
-        .portfolio-title { font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 15px; }
-        .btn-view {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
+        .site-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .site-url {
+            font-family: 'JetBrains Mono';
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .site-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .site-link {
             text-decoration: none;
+            color: var(--secondary);
             font-size: 0.85rem;
             font-weight: 600;
-            width: fit-content;
-            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
-        .btn-view:hover { background: var(--secondary); border-color: var(--secondary); }
 
-        /* --- Team Section Logic --- */
         .team-toggle-container { text-align: center; margin-bottom: 40px; }
         
-        #teamGrid {
+        #connectContent {
             max-height: 0;
             overflow: hidden;
             opacity: 0;
-            transition: max-height 0.8s ease, opacity 0.5s ease, margin 0.5s ease;
+            transition: max-height 1s ease, opacity 0.5s ease, margin 0.5s ease;
             margin-top: 0;
         }
         
-        #teamGrid.active {
-            max-height: 2000px; /* Sufficiently large */
+        #connectContent.active {
+            max-height: 3000px;
             opacity: 1;
             margin-top: 40px;
         }
 
         .team-card {
             text-align: center;
-            padding: 40px;
+            padding: 30px;
             position: relative;
         }
 
         .team-avatar {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            margin: 0 auto 25px;
-            border: 2px solid var(--glass-border);
-            padding: 4px;
-            background: var(--primary);
+            margin: 0 auto 20px;
+            border: 2px solid var(--secondary);
+            padding: 0;
+            background: rgba(0,0,0,0.3);
             position: relative;
             z-index: 1;
-        }
-        
-        .team-avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            background: var(--gradient);
+            box-shadow: 0 10px 20px rgba(249, 115, 22, 0.2);
         }
 
         .social-grid {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 25px;
+            gap: 8px;
+            margin-top: 20px;
             flex-wrap: wrap;
         }
         
         .social-link {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
+            gap: 6px;
+            padding: 6px 12px;
             background: rgba(255,255,255,0.03);
             border: 1px solid var(--glass-border);
-            border-radius: 8px;
+            border-radius: 6px;
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             transition: 0.3s;
         }
         
         .social-link:hover {
             color: white;
-            border-color: var(--secondary);
-            background: rgba(249, 115, 22, 0.1);
+            border-color: var(--accent);
+            background: rgba(139, 92, 246, 0.1);
         }
 
-        /* --- Buttons --- */
         .btn-main {
             background: var(--gradient);
             padding: 16px 32px;
@@ -322,20 +368,56 @@
         }
         .btn-main:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(249, 115, 22, 0.3); }
 
-        /* --- Mobile Optimizations --- */
+        /* Mobile View Logic */
         @media (max-width: 768px) {
             nav { display: none; }
+            
+            /* Show New Top Bar */
+            .mobile-top-bar { display: flex; }
+            
             .mobile-nav { display: flex; }
-            section { padding: 80px 6%; }
-            .hero { text-align: center; align-items: center; padding-top: 0; }
+            
+            /* Add padding-top to account for the 60px top bar */
+            body { padding-top: 60px; }
+            
+            section { 
+                display: none; 
+                padding: 80px 6%; 
+                opacity: 0; 
+                transform: translateY(20px);
+                transition: opacity 0.5s ease;
+            }
+            
+            section.mobile-active {
+                display: block;
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            .hero {
+                display: flex;
+                text-align: center;
+                align-items: center;
+                padding-top: 0;
+            }
+            
             .section-header h2 { font-size: 2rem; }
-            .portfolio-card { height: 300px; }
+            .sites-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigation -->
+    <!-- NEW Mobile Top Bar -->
+    <div class="mobile-top-bar">
+        <div class="logo">Philvin</div>
+        <div class="top-bar-icons">
+            <a href="tel:+254700000000"><i class="fas fa-phone"></i></a>
+            <a href="mailto:info@philvin.com"><i class="fas fa-envelope"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+
     <nav>
         <div class="logo">Philvin</div>
         <ul class="nav-links">
@@ -349,10 +431,10 @@
                 </ul>
             </li>
             <li>
-                <a href="#services">Services <i class="fas fa-chevron-down" style="font-size: 0.6rem; margin-left:5px;"></i></a>
+                <a href="#portfolio">Portfolio <i class="fas fa-chevron-down" style="font-size: 0.6rem; margin-left:5px;"></i></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#services">What We Do</a></li>
                     <li><a href="#portfolio">Deployed Sites</a></li>
+                    <li><a href="#services">Services</a></li>
                 </ul>
             </li>
             <li><a href="#gallery">Gallery</a></li>
@@ -360,26 +442,23 @@
         </ul>
     </nav>
 
-    <!-- Mobile Bottom Nav -->
     <div class="mobile-nav">
-        <a href="#home"><i class="fas fa-home"></i></a>
+        <a href="#home" class="active"><i class="fas fa-home"></i></a>
         <a href="#about"><i class="fas fa-user-tie"></i></a>
-        <a href="#services"><i class="fas fa-laptop-code"></i></a>
         <a href="#portfolio"><i class="fas fa-globe"></i></a>
+        <a href="#gallery"><i class="fas fa-images"></i></a>
         <a href="#contact"><i class="fas fa-envelope"></i></a>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
+    <section class="hero mobile-active" id="home">
         <div class="hero-tag">
             <i class="fas fa-circle" style="font-size: 6px; color: var(--secondary);"></i> SYSTEMS ENGINEERING
         </div>
         <h1>Engineering <span>Digital Efficiency.</span></h1>
         <p>A technology solutions firm specializing in the design and development of intelligent digital platforms that automate and optimize traditional manual operations.</p>
-        <a href="#contact" class="btn-main">Initiate Project <i class="fas fa-arrow-right"></i></a>
+        <a href="#contact" class="btn-main" onclick="document.getElementById('contact').classList.add('mobile-active'); document.getElementById('contact').scrollIntoView();">Initiate Project <i class="fas fa-arrow-right"></i></a>
     </section>
 
-    <!-- About Section -->
     <section id="about">
         <div class="section-header">
             <p>01 // ABOUT US</p>
@@ -420,7 +499,6 @@
         </div>
     </section>
 
-    <!-- Services Section -->
     <section id="services">
         <div class="section-header">
             <p>02 // EXPERTISE</p>
@@ -445,48 +523,87 @@
         </div>
     </section>
 
-    <!-- Portfolio / Deployed Sites -->
     <section id="portfolio">
         <div class="section-header">
             <p>03 // PORTFOLIO</p>
             <h2>Deployed Systems</h2>
         </div>
-        <div class="grid-2">
-            
-            <!-- Project 1 -->
-            <div class="portfolio-card glass-card" style="padding: 0;">
-                <img src="https://images.unsplash.com/photo-1551288049-bbda38a5f452?auto=format&fit=crop&q=80&w=800" alt="Logistics Dashboard" class="portfolio-img">
-                <div class="portfolio-overlay">
-                    <span class="portfolio-tag">Enterprise Solution</span>
-                    <h4 class="portfolio-title">Logistics Hub v1.0</h4>
-                    <a href="#" class="btn-view"><i class="fas fa-external-link-alt"></i> View Live</a>
+        
+        <div class="sites-grid">
+            <div class="site-card">
+                <div>
+                    <div class="site-icon"><i class="fas fa-futbol"></i></div>
+                    <div class="site-url">finefootfc.com</div>
+                    <div class="site-name">Fine Foot FC</div>
                 </div>
+                <a href="https://finefootfc.com" target="_blank" class="site-link">View Live <i class="fas fa-arrow-right"></i></a>
             </div>
 
-            <!-- Project 2 -->
-            <div class="portfolio-card glass-card" style="padding: 0;">
-                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Inventory System" class="portfolio-img">
-                <div class="portfolio-overlay">
-                    <span class="portfolio-tag">Inventory Management</span>
-                    <h4 class="portfolio-title">Smart Inventory Logic</h4>
-                    <a href="#" class="btn-view"><i class="fas fa-external-link-alt"></i> View Live</a>
+            <div class="site-card">
+                <div>
+                    <div class="site-icon"><i class="fas fa-spa"></i></div>
+                    <div class="site-url">goldenaurabeautys.com</div>
+                    <div class="site-name">Golden Aura Beautys</div>
                 </div>
+                <a href="https://goldenaurabeautys.com" target="_blank" class="site-link">View Live <i class="fas fa-arrow-right"></i></a>
             </div>
 
-             <!-- Project 3 -->
-             <div class="portfolio-card glass-card" style="padding: 0;">
-                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc48?auto=format&fit=crop&q=80&w=800" alt="Edu Portal" class="portfolio-img">
-                <div class="portfolio-overlay">
-                    <span class="portfolio-tag">Education</span>
-                    <h4 class="portfolio-title">EduManage Portal</h4>
-                    <a href="#" class="btn-view"><i class="fas fa-external-link-alt"></i> View Live</a>
+            <div class="site-card">
+                <div>
+                    <div class="site-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="site-url">mybooapp.com</div>
+                    <div class="site-name">MyBoo App</div>
                 </div>
+                <a href="https://mybooapp.com" target="_blank" class="site-link">View Live <i class="fas fa-arrow-right"></i></a>
             </div>
 
+            <div class="site-card">
+                <div>
+                    <div class="site-icon"><i class="fas fa-code"></i></div>
+                    <div class="site-url">philvin-dev.vercel.app</div>
+                    <div class="site-name">Philvin Main Site</div>
+                </div>
+                <a href="https://philvin-dev.vercel.app/" target="_blank" class="site-link">View Live <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="site-card">
+                <div>
+                    <div class="site-icon"><i class="fas fa-church"></i></div>
+                    <div class="site-url">fcc-kabiria-org.vercel.app</div>
+                    <div class="site-name">FCC Kabiria</div>
+                </div>
+                <a href="https://fcc-kabiria-org.vercel.app/" target="_blank" class="site-link">View Live <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="site-card">
+                <div>
+                    <div class="site-icon"><i class="fas fa-store"></i></div>
+                    <div class="site-url">my-commerce-eight.vercel.app</div>
+                    <div class="site-name">My Commerce</div>
+                </div>
+                <a href="https://my-commerce-eight.vercel.app/" target="_blank" class="site-link">View Live <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="site-card">
+                <div>
+                    <div class="site-icon"><i class="fas fa-project-diagram"></i></div>
+                    <div class="site-url">growth-grid-sigma.vercel.app</div>
+                    <div class="site-name">Growth Grid</div>
+                </div>
+                <a href="https://growth-grid-sigma.vercel.app/" target="_blank" class="site-link">View Live <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="site-card">
+                <div>
+                    <div class="site-icon"><i class="fas fa-cubes"></i></div>
+                    <div class="site-url">jenga-flow.vercel.app</div>
+                    <div class="site-name">Jenga Flow</div>
+                </div>
+                <a href="https://jenga-flow.vercel.app/" target="_blank" class="site-link">View Live <i class="fas fa-arrow-right"></i></a>
+            </div>
         </div>
     </section>
 
-    <!-- Gallery Section -->
     <section id="gallery">
         <div class="section-header">
             <p>04 // GALLERY</p>
@@ -502,41 +619,22 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact">
         <div class="section-header" style="text-align: center;">
             <p>05 // CONTACT</p>
-            <h2>Get In Touch</h2>
+            <h2>Connect With Us</h2>
         </div>
 
-        <div class="glass-card" style="max-width: 800px; margin: 0 auto;">
-            <form id="contactForm" style="display: grid; gap: 20px;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <input type="text" placeholder="Name" required style="padding: 15px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; color: white;">
-                    <input type="email" placeholder="Email" required style="padding: 15px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; color: white;">
-                </div>
-                <textarea placeholder="Project Description..." rows="4" style="padding: 15px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; color: white; resize: none;"></textarea>
-                <button type="submit" class="btn-main" style="width: 100%; justify-content: center;">Send Message</button>
-            </form>
-        </div>
-
-        <!-- Team Toggle Button -->
         <div class="team-toggle-container">
-            <button id="teamToggle" class="btn-main" style="margin-top: 40px; background: transparent; border: 1px solid var(--glass-border); box-shadow: none;">
-                <i class="fas fa-users"></i> Meet The Team
+            <button id="teamToggle" class="btn-main" style="background: transparent; border: 1px solid var(--glass-border); box-shadow: none;">
+                <i class="fas fa-users"></i> Meet The Team & Contact
             </button>
         </div>
 
-        <!-- Hidden Team Grid -->
-        <div id="teamGrid">
+        <div id="connectContent">
             <div class="grid-2">
-                
-                <!-- Phil's Profile -->
                 <div class="glass-card team-card">
-                    <div class="team-avatar">
-                        <!-- YOUR UPLOADED IMAGE -->
-                        <img src="https://drive.google.com/uc?export=view&id=1LmfOAtXZoltvdq04qdquW6LLeJjJsBq8" alt="Phil">
-                    </div>
+                    <div class="team-avatar">P</div>
                     <h3 style="color: white;">Phil</h3>
                     <p style="color: var(--secondary); font-size: 0.9rem; margin-bottom: 20px;">Systems Architect</p>
                     <div class="social-grid">
@@ -549,12 +647,8 @@
                     </div>
                 </div>
 
-                <!-- Vinnie's Profile -->
                 <div class="glass-card team-card">
-                    <div class="team-avatar">
-                        <!-- PLACEHOLDER FOR VINNIE -->
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200" alt="Vinnie">
-                    </div>
+                    <div class="team-avatar">V</div>
                     <h3 style="color: white;">Vinnie</h3>
                     <p style="color: var(--accent); font-size: 0.9rem; margin-bottom: 20px;">Lead Developer</p>
                     <div class="social-grid">
@@ -566,7 +660,18 @@
                         <a href="#" class="social-link"><i class="fab fa-youtube"></i> YouTube</a>
                     </div>
                 </div>
+            </div>
 
+            <div class="glass-card" style="max-width: 800px; margin: 40px auto 0;">
+                <h3 style="text-align: center; margin-bottom: 20px;">General Inquiry</h3>
+                <form id="contactForm" style="display: grid; gap: 20px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <input type="text" placeholder="Name" required style="padding: 15px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; color: white;">
+                        <input type="email" placeholder="Email" required style="padding: 15px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; color: white;">
+                    </div>
+                    <textarea placeholder="Project Description..." rows="4" style="padding: 15px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; color: white; resize: none;"></textarea>
+                    <button type="submit" class="btn-main" style="width: 100%; justify-content: center;">Send Message</button>
+                </form>
             </div>
         </div>
     </section>
@@ -576,64 +681,58 @@
     </footer>
 
     <script>
-        // Set Year
         document.getElementById('year').innerText = new Date().getFullYear();
 
-        // Scroll Reveal Observer
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('section, .glass-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease-out';
-            observer.observe(el);
-        });
-
-        // Team Toggle Logic
         const teamToggle = document.getElementById('teamToggle');
-        const teamGrid = document.getElementById('teamGrid');
+        const connectContent = document.getElementById('connectContent');
         
         teamToggle.addEventListener('click', () => {
-            teamGrid.classList.toggle('active');
-            if(teamGrid.classList.contains('active')) {
-                teamToggle.innerHTML = '<i class="fas fa-times"></i> Close Team';
+            connectContent.classList.toggle('active');
+            if(connectContent.classList.contains('active')) {
+                teamToggle.innerHTML = '<i class="fas fa-times"></i> Close Section';
+                if(window.innerWidth <= 768) {
+                    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+                }
             } else {
-                teamToggle.innerHTML = '<i class="fas fa-users"></i> Meet The Team';
+                teamToggle.innerHTML = '<i class="fas fa-users"></i> Meet The Team & Contact';
             }
         });
 
-        // Form Submit
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             alert("Message Sent Successfully!");
             this.reset();
         });
 
-        // Mobile Nav Active State
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.mobile-nav a');
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active');
-                }
-            });
-        });
+        function handleMobileNav() {
+            if(window.innerWidth <= 768) {
+                const navLinks = document.querySelectorAll('.mobile-nav a');
+                const sections = document.querySelectorAll('section');
+
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+
+                        sections.forEach(sec => sec.classList.remove('mobile-active'));
+
+                        const targetId = this.getAttribute('href');
+                        const targetSection = document.querySelector(targetId);
+                        
+                        if(targetSection) {
+                            targetSection.classList.add('mobile-active');
+                            targetSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                });
+            }
+        }
+
+        handleMobileNav();
+        window.addEventListener('resize', handleMobileNav);
+
     </script>
 </body>
 </html>
